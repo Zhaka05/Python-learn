@@ -18,7 +18,7 @@ import scoreboard
 
 
 
-# Detect collision with tail
+
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
@@ -48,13 +48,19 @@ while game_is_on:
     # Detect collision with food
     if snake.head.distance(food) < 15:
         food.refresh()
+        snake.extend()
         score.increase_score()
+        # Detect collision with wall
     if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
         game_is_on = False
         score.game_over()
 
-# Detect collision with wall
 
+    # Detect collision with tail
+    for block in snake.blocks[1:]:
+        if snake.head.distance(block) < 10:
+            game_is_on = False
+            score.game_over()
 
 
 
